@@ -9,6 +9,7 @@ use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 
 use rust_axum_template::app;
+use rust_axum_template::graphql;
 use rust_axum_template::shared::config::Config;
 use rust_axum_template::shared::db;
 use rust_axum_template::shared::state::AppState;
@@ -27,9 +28,11 @@ async fn main() -> anyhow::Result<()> {
     db::run_migrations(&db).await?;
 
     let addr = config.server_addr;
+    let graphql_schema = graphql::build_schema(db.clone());
     let state = AppState {
         db,
         config: Arc::new(config),
+        graphql: graphql_schema,
     };
 
     let router = app::build_router(state);

@@ -10,5 +10,7 @@
 
 pub mod app;
 pub mod domains;
+pub mod graphql;
+pub mod openapi;
 pub mod shared;
 pub mod system;

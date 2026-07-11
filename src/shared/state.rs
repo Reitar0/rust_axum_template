@@ -16,4 +16,6 @@ pub struct AppState {
     /// пока ни один срез её не читает — глушим предупреждение.
     #[allow(dead_code)]
     pub config: Arc<Config>,
+    /// Скомпилированная GraphQL-схема (используется хендлером `/graphql`).
+    pub graphql: crate::graphql::AppSchema,
 }

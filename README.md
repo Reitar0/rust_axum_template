@@ -111,3 +111,19 @@ tests/
 
 БД остаётся поднятой между запусками сервиса (быстрый рестарт). Гаси её
 командой `just stop`, когда закончишь работу.
+
+## API-документация (Swagger) и GraphQL
+
+При запущенном сервисе доступны:
+
+| URL | Что это |
+|---|---|
+| `http://127.0.0.1:8080/api` | Swagger UI — интерактивная документация REST |
+| `http://127.0.0.1:8080/api-docs/openapi.json` | OpenAPI 3.1 JSON (генерируется из аннотаций utoipa) |
+| `http://127.0.0.1:8080/graphql` | GraphQL: POST — запросы, GET — песочница GraphiQL |
+
+**Добавить REST-эндпоинт в Swagger:** пометь хендлер `#[utoipa::path(...)]`, его DTO —
+`#[derive(ToSchema)]`, и зарегистрируй в `src/openapi.rs` (`paths(...)`, `components(schemas(...))`).
+
+**Добавить GraphQL-поле:** новый метод в `impl Query` (`src/graphql/query.rs`). Пул БД
+доступен резолверам через `ctx.data::<sqlx::PgPool>()`.

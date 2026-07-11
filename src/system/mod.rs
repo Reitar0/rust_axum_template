@@ -6,7 +6,7 @@ use axum::routing::get;
 
 use crate::shared::state::AppState;
 
-mod health;
+pub mod health;
 
 /// Роуты системных эндпоинтов.
 pub fn router() -> Router<AppState> {
