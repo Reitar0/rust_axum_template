@@ -1,0 +1,16 @@
+meta {
+  name: Health
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/health
+  body: none
+  auth: none
+}
+
+docs {
+  Проверка живости сервиса и подключения к БД.
+  Ожидаемый ответ: 200 {"status":"ok","database":"up"}
+}

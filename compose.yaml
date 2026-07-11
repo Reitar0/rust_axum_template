@@ -1,0 +1,27 @@
+# PostgreSQL для локальной разработки.
+# Поднять:   docker compose up -d
+# Остановить: docker compose down        (данные сохранятся в volume)
+# Снести всё: docker compose down -v      (вместе с данными)
+#
+# Сам сервис на этапе разработки запускается локально через `cargo run`
+# (быстрее пересборка). В контейнер он пакуется отдельно через Dockerfile.
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

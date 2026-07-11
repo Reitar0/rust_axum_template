@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "rust_axum_template",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
