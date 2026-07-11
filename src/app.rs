@@ -1,4 +1,5 @@
-//! Сборка всего приложения: роуты всех срезов + общий middleware.
+//! Сборка приложения: роуты системных эндпоинтов и всех бизнес-доменов
+//! + общий middleware.
 
 use std::time::Duration;
 
@@ -7,21 +8,19 @@ use axum::http::StatusCode;
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 
-use crate::features;
 use crate::shared::state::AppState;
+use crate::{domains, system};
 
-/// Строит корневой `Router`, объединяя роуты всех вертикальных срезов
-/// и навешивая сквозной middleware (логирование запросов, таймаут).
+/// Строит корневой `Router`: системные эндпоинты + роуты всех доменов,
+/// сверху — сквозной middleware (логирование, таймаут).
 pub fn build_router(state: AppState) -> Router {
     Router::new()
-        // Срезы — каждый добавляется через .merge(...).
-        .merge(features::health::router())
-        // Сквозной middleware.
+        .merge(system::router())
+        .merge(domains::router())
         .layer(TimeoutLayer::with_status_code(
             StatusCode::REQUEST_TIMEOUT,
             Duration::from_secs(30),
         ))
         .layer(TraceLayer::new_for_http())
-        // Прокидываем общее состояние во все хендлеры.
         .with_state(state)
 }

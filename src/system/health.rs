@@ -16,10 +16,7 @@ pub struct HealthResponse {
     database: &'static str,
 }
 
-/// Проверяет, что сервис жив и база отвечает.
-///
-/// Выполняет тривиальный запрос `SELECT 1`. Если база недоступна, ошибка через
-/// `?` превращается в `AppError::Database` → HTTP 500.
+/// Проверяет, что сервис жив и база отвечает (`SELECT 1`).
 pub async fn health(State(state): State<AppState>) -> Result<Json<HealthResponse>, AppError> {
     sqlx::query("SELECT 1").execute(&state.db).await?;
 
