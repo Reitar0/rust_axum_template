@@ -1,0 +1,5 @@
+# Фиксирует toolchain и компоненты для всех, кто работает с проектом.
+# rustup доустановит их автоматически при работе в этом каталоге.
+[toolchain]
+channel = "stable"
+components = ["rustfmt", "clippy", "rust-src", "llvm-tools-preview"]

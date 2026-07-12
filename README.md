@@ -132,3 +132,25 @@ tests/
 
 **Добавить GraphQL-поле:** новый метод в `impl Query` (`src/graphql/query.rs`). Пул БД
 доступен резолверам через `ctx.data::<sqlx::PgPool>()`.
+
+## Инструменты разработки
+
+`rustup` доустановит нужный toolchain + rustfmt/clippy/rust-src/llvm-tools автоматически
+(из `rust-toolchain.toml`). Cargo-утилиты поставь одной командой (`--locked` — nextest требует его):
+
+    cargo install --locked just cargo-nextest cargo-watch cargo-audit cargo-edit cargo-llvm-cov cargo-deny cargo-outdated cargo-machete
+
+(быстрее — `cargo binstall ...` готовыми бинарниками, если установлен `cargo-binstall`.)
+Либо после установки `just` — доставить всё разом через `just setup`.
+
+| Утилита | Зачем |
+|---|---|
+| `just` | task-runner (`just dev`, `just test`, …) |
+| `cargo-nextest` | быстрый тест-раннер (`just test`, CI) |
+| `cargo-watch` | автоперезапуск (`just watch`) |
+| `cargo-deny` | аудит зависимостей: уязвимости + лицензии |
+| `cargo-audit` | аудит уязвимостей (RustSec) |
+| `cargo-edit` | `cargo upgrade` / `set-version` (`add`/`rm` уже встроены в cargo) |
+| `cargo-llvm-cov` | покрытие кода тестами |
+| `cargo-outdated` | устаревшие зависимости |
+| `cargo-machete` | неиспользуемые зависимости |

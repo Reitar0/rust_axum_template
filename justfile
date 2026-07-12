@@ -7,6 +7,10 @@ set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
 default:
     @just --list
 
+# Установить cargo-утилиты проекта (--locked: nextest требует его; just ставится отдельно).
+setup:
+    cargo install --locked cargo-nextest cargo-watch cargo-audit cargo-edit cargo-llvm-cov cargo-deny cargo-outdated cargo-machete
+
 # Поднять БД (ждёт готовности) и запустить сервис; БД не гасится при выходе
 dev:
     docker compose up -d --wait
