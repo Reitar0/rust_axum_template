@@ -42,9 +42,7 @@ impl IntoResponse for AppError {
         let (status, message) = match &self {
             AppError::NotFound(msg) => (StatusCode::NOT_FOUND, msg.clone()),
             AppError::Validation(msg) => (StatusCode::UNPROCESSABLE_ENTITY, msg.clone()),
-            AppError::Unauthorized => {
-                (StatusCode::UNAUTHORIZED, "не авторизован".to_string())
-            }
+            AppError::Unauthorized => (StatusCode::UNAUTHORIZED, "не авторизован".to_string()),
             // Внутренние ошибки: подробность — в лог, клиенту — обезличенное сообщение,
             // чтобы не протекали детали реализации/БД.
             AppError::Database(err) => {

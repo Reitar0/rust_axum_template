@@ -17,8 +17,7 @@ use rust_axum_template::shared::state::AppState;
 async fn health_returns_ok() {
     // Берём DATABASE_URL так же, как при обычном запуске (из .env / окружения).
     let _ = dotenvy::dotenv();
-    let config =
-        Config::from_env().expect("нужна DATABASE_URL: подними базу и настрой .env");
+    let config = Config::from_env().expect("нужна DATABASE_URL: подними базу и настрой .env");
 
     let db = db::create_pool(&config.database_url)
         .await

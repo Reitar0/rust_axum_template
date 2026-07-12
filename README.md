@@ -1,5 +1,7 @@
 # rust_axum_template
 
+![CI](https://github.com/Reitar0/rust_axum_template/actions/workflows/ci.yml/badge.svg)
+
 Стартовый шаблон веб-API на Rust: **axum** + **sqlx/PostgreSQL**, организованный по
 **Vertical Slice Architecture**. Дизайн — в
 [docs/superpowers/specs/2026-07-11-rust-axum-vsa-starter-design.md](docs/superpowers/specs/2026-07-11-rust-axum-vsa-starter-design.md).
@@ -67,7 +69,10 @@ tests/
 
 ## Переменные окружения
 
-См. `.env.example`. Ключевая — `DATABASE_URL` (обязательна).
+См. `.env.example`. Ключевые:
+- `DATABASE_URL` — подключение к БД (обязательна).
+- `CORS_ALLOWED_ORIGINS` — разрешённые origins фронта через запятую. В проде задаётся
+  окружением деплоя реальным доменом фронта (не `*`, не `localhost`).
 
 ## API-коллекция (Bruno)
 
